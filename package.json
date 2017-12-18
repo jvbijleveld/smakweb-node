@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "custom-request-wrapper": "file:wrapper\\custom-request-wrapper-0.0.1.tgz",
     "ejs": "^2.5.7",
     "express": "^4.16.2"
   }
