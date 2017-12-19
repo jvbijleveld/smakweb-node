@@ -2,20 +2,31 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const wrapper = require('custom-request-wrapper');
+const log4js = require('log4js');
 
-var app = express();
 const hostname = '127.0.0.1';
 const port = 3000;
 
-
-var logger = function(req, resp, next){
-	console.log('Logging...');
-	next();
-}
-
 var recipeEnt = require('./entities/recipeEntity');
+var app = express();
+var recipes = [
+	{
+		id: 1, 
+		name: 'First', 
+		author:'me'
+	}
+]
 
-//app.use(logger);
+log4js.configure({appenders: {
+    	everything: { type: 'file', filename: './log/app.log' }
+	},
+	categories: {
+		default: { appenders: [ 'everything' ], level: 'debug' }
+	}
+});
+
+logger = log4js.getLogger();
+logger.level = 'debug';
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'views'));
@@ -25,17 +36,19 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.post('/create', function(req, resp){
-	console.log('Got request: ' + req.body.name);
 	var recipe = wrapper.wrap(recipeEnt, req);
-	console.log('Parsed request: ' + recipe.name);
-	
-	resp.send(recipe);
-	
+	logger.debug('Created a recipe: ', recipeEnt);
+	recipes.push(recipe);
+	resp.render('index', {
+		title: 'Hello world',
+		recipes: recipes
+	});
 });
 
 app.get('/', function(req, resp){
 	resp.render('index', {
-		title: 'Hello world'	
+		title: 'Hello world',
+		recipes: recipes
 	});
 		
 });

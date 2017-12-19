@@ -4,6 +4,13 @@
 </header>
 <body>
 <h1>Hello all</h1>
+
+<ul>
+	<% recipes.forEach(function(recipe){ %>
+		<li>(<%=recipe.id%>) <%= recipe.name %> by <%= recipe.author %></li>
+	<% })%>
+</ul>
+
 <form method="POST" action="create">
 	<label for="name">Id</label>
 	<input type="text" name="id">

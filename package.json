@@ -10,8 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "custom-request-wrapper": "file:wrapper\\custom-request-wrapper-0.0.1.tgz",
+    "custom-request-wrapper": "git+https://github.com/jvbijleveld/node_module-request-wrapper.git",
     "ejs": "^2.5.7",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "log4js": "^2.4.1"
   }
 }
